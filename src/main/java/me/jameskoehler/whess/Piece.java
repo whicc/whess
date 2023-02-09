@@ -295,6 +295,13 @@ public class Piece {
         m_x = x;
     }
 
+    public void setX(char x){
+
+        int xInt = x;
+
+        m_x = xInt - 64;
+    }
+
     /**
      *
      * @return the y coordinate of the piece
