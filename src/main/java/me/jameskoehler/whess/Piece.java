@@ -2,23 +2,32 @@ package me.jameskoehler.whess;
 
 public class Piece {
 
-    int m_x;
-    int m_y;
+    private int m_x;
+    private int m_y;
 
-    byte m_info;
+    private byte m_info;
     // bits 0 - 2 are type
     // bit 3 is color (0 for white 1 for black)
     // bit 4 is if the piece has moved or not (0 has not moved 1 has moved)
     // bit 5 is type error
     // bit 6 is color error
 
+    /**
+     * This creates a piece with an invalid location and its info byte set to 0.
+     */
     public Piece(){
 
-        m_x = 0;
-        m_y = 0;
+        m_x = -1;
+        m_y = -1;
 
-        m_info = (byte)(infoHelper.generateTypeByte(PieceInfo.ROOK) | infoHelper.generateColorByte(PieceInfo.BLACK));
+        m_info = 0;
     }
+    /**
+     * This creates a piece with an invalid location, but its info byte is filled based on the parameters passed to it.
+     * @param type     the type of the piece (i.e. pawn, rook, etc.)
+     * @param color    the color of the piece
+     * @param hasMoved if the piece has moved or not
+     */
     public Piece(String type, String color, boolean hasMoved){
 
         m_x = -1;
@@ -26,6 +35,14 @@ public class Piece {
 
         m_info = (byte) (infoHelper.generateTypeByte(type) | infoHelper.generateColorByte(color) | infoHelper.generateMoveByte(hasMoved));
     }
+    /**
+     * This created a piece based on the passed location, and information.
+     * @param x        the x coordinate of the piece
+     * @param y        the y coordinate of the piece
+     * @param type     the type of the piece (i.e. pawn, rook, etc.)
+     * @param color    the color of the piece
+     * @param hasMoved if the piece has moved or not
+     */
     public Piece(int x, int y, String type, String color, boolean hasMoved){
 
         m_x = x;
@@ -33,7 +50,26 @@ public class Piece {
 
         m_info = (byte) (infoHelper.generateTypeByte(type) | infoHelper.generateColorByte(color) | infoHelper.generateMoveByte(hasMoved));
     }
+    /**
+     * This creates a piece based on the passed location, and a preset information byte.
+     * @param x    the x coordinate of the piece
+     * @param y    the y coordinate of the piece
+     * @param info a byte containing type, color, and move status of the piece
+     */
+    public Piece(int x, int y, byte info){
 
+        m_x = x;
+        m_y = y;
+
+        m_info = info;
+    }
+
+    /**
+     * This creates a piece with an invalid location, but its info byte is filled based on the parameters passed to it.
+     * @param type     the type of the piece (i.e. pawn, rook, etc.)
+     * @param color    the color of the piece
+     * @param hasMoved if the piece has moved or not
+     */
     @Deprecated
     public Piece(PieceInfo type, PieceInfo color, boolean hasMoved){
 
@@ -42,6 +78,14 @@ public class Piece {
 
         m_info = (byte) (infoHelper.generateTypeByte(type) | infoHelper.generateColorByte(color) | infoHelper.generateMoveByte(hasMoved));
     }
+    /**
+     * This created a piece based on the passed location, and information.
+     * @param x        the x coordinate of the piece
+     * @param y        the y coordinate of the piece
+     * @param type     the type of the piece (i.e. pawn, rook, etc.)
+     * @param color    the color of the piece
+     * @param hasMoved if the piece has moved or not
+     */
     @Deprecated
     public Piece(int x, int y, PieceInfo type, PieceInfo color, boolean hasMoved){
 
@@ -51,6 +95,10 @@ public class Piece {
         m_info = (byte) (infoHelper.generateTypeByte(type) | infoHelper.generateColorByte(color) | infoHelper.generateMoveByte(hasMoved));
     }
 
+    /**
+     * Returns the type of the piece as a PieceInfo enum.
+     * @return the type of the piece (i.e. pawn, rook, etc.)
+     */
     @Deprecated
     public PieceInfo getType(){
 
@@ -68,6 +116,11 @@ public class Piece {
             default -> PieceInfo.ERROR;
         };
     }
+
+    /**
+     * Returns the type of the piece as a String.
+     * @return the type of the piece (i.e. pawn, rook, etc.)
+     */
     public String getTypeString(){
 
         if((m_info & 32) == 32) return "error";
@@ -85,6 +138,10 @@ public class Piece {
         };
     }
 
+    /**
+     * Sets the type of the piece using the PieceInfo enum.
+     * @param type the type of the piece (i.e. pawn, rook, etc.)
+     */
     @Deprecated
     public void setType(PieceInfo type){
 
@@ -93,6 +150,10 @@ public class Piece {
 
         m_info |= infoHelper.generateTypeByte(type);
     }
+    /**
+     * Sets the type of the piece using a String.
+     * @param type the type of the piece (i.e. pawn, rook, etc.)
+     */
     public void setType(String type){
 
         m_info >>= 3;
@@ -101,6 +162,10 @@ public class Piece {
         m_info |= infoHelper.generateTypeByte(type);
     }
 
+    /**
+     * Returns the color of the piece as a PieceInfo enum.
+     * @return the color of the piece
+     */
     @Deprecated
     public PieceInfo getColor(){
 
@@ -109,6 +174,10 @@ public class Piece {
         if((m_info & 8) == 8) return PieceInfo.BLACK;
         return PieceInfo.WHITE;
     }
+    /**
+     * Returns the color of the piece as a PieceInfo enum.
+     * @return the color of the piece
+     */
     @Deprecated
     public PieceInfo getAffiliation(){
 
@@ -117,6 +186,10 @@ public class Piece {
         if((m_info & 8) == 8) return PieceInfo.BLACK;
         return PieceInfo.WHITE;
     }
+    /**
+     * Returns the color of the piece as a String.
+     * @return the color of the piece
+     */
     public String getColorString(){
 
         if((m_info & 64) == 64) return "error";
@@ -124,30 +197,56 @@ public class Piece {
         if((m_info & 8) == 8) return "black";
         return "white";
     }
+
+    /**
+     * Returns if the piece is white or not.
+     * @return is the piece white
+     */
     public boolean isWhite(){
 
         return ((m_info & 8) == 0);
     }
 
+    /**
+     * Sets the color of the piece using the PieceInfo enum.
+     * @param color the color of the piece
+     */
     @Deprecated
     public void setColor(PieceInfo color){
 
         m_info &= infoHelper.generateColorByte(color);
     }
+    /**
+     * Sets the color of the piece using the PieceInfo enum.
+     * @param color the color of the piece
+     */
     @Deprecated
     public void setAffiliation(PieceInfo color){
 
         m_info &= infoHelper.generateColorByte(color);
     }
+    /**
+     * Sets the color of the piece using a String.
+     * @param color the color of the piece
+     */
     public void setColor(String color){
 
         m_info &= infoHelper.generateColorByte(color);
     }
 
+    /**
+     * Returns if the piece has moved or not.
+     * @return if the piece has moved
+     */
     public boolean getHasMoved(){
 
         return ((m_info & 16) == 16);
     }
+
+    /**
+     * Sets if the piece has moved
+     * @param hasMoved if the piece has moved
+     */
     public void setHasMoved(boolean hasMoved){
 
         m_info &= infoHelper.generateMoveByte(hasMoved);
