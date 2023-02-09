@@ -4,6 +4,9 @@ public class Board {
 
     Piece[] pieces;
 
+    /**
+     * This creates a chess board set up for the start of a match, with white at the bottom and black at the top.
+     */
     public Board(){
 
         pieces = new Piece[]{
@@ -39,5 +42,42 @@ public class Board {
                 new Piece(6, 7, "pawn", "black", false),
                 new Piece(7, 7, "pawn", "black", false),
                 new Piece(8, 7, "pawn", "black", false)};
+    }
+
+    /**
+     * This creates a chess board based on the board state passed in.
+     * The new system no longer uses board states, so this is somewhat slow.
+     * @param boardState
+     */
+    @Deprecated
+    public Board(Piece[][] boardState){
+
+        Piece[] tempPieces = new Piece[boardState.length * boardState[0].length];
+
+        int index = 0;
+
+        for(int x = 0; x < boardState.length; x++){ // this loop iterates through the pieces in the boardState
+
+            for(int y = 0; y < boardState[x].length; y++){
+
+                if(boardState[x][y].isTypeFlagSet() || boardState[x][y].isColorFlagSet())
+                    continue; // we no longer store empty slots on the board
+
+                // we now have to make sure the pieces know their own coordinates
+                boardState[x][y].setX(x + 1);
+                boardState[x][y].setY(y + 1);
+
+                // we now save this valid piece to the tempPieces array, and move the index forward once
+                tempPieces[index] = boardState[x][y];
+                index++;
+            }
+        }
+
+        // resize pieces array to the amount of valid pieces saved
+        pieces = new Piece[index + 1];
+
+        // fill only the valid pieces into the pieces array
+        for(int i = 0; i < pieces.length; i++)
+            pieces[i] = tempPieces[i];
     }
 }
