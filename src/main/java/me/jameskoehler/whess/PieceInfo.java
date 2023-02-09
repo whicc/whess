@@ -14,5 +14,6 @@ public enum PieceInfo {
     BISHOP,
     KING,
     QUEEN,
-    PAWN
+    PAWN,
+    ERROR
 }
