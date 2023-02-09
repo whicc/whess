@@ -152,4 +152,14 @@ public class Piece {
 
         m_info &= infoHelper.generateMoveByte(hasMoved);
     }
+
+    @Override
+    public String toString(){
+
+        String stringForm = getColorString() + " " + getTypeString() + " at ";
+        stringForm += (char)(m_x + 64); // this converts the numbers 1-8 to the letters a-h
+        stringForm += ", " + m_y;
+
+        return stringForm;
+    }
 }
