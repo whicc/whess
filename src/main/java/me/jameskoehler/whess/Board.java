@@ -166,4 +166,70 @@ public class Board {
         m_portableGameNotation += (char)(piece.getX() + 64);          // the x position
         m_portableGameNotation += piece.getY();                       // the y position
     }
+
+    /**
+     * This version of the movePiece method uses the old system of piece description.
+     * This returns an int return code with the following meanings:
+     * 0 - the move was made
+     * 1 - the move failed
+     * 2 - white has won
+     * 3 - black has won
+     *
+     * @param oldX the x coordinate of the piece to move
+     * @param oldY the y coordinate of the piece to move
+     * @param newX the x coordinate of the destination
+     * @param newY the y coordinate of the destination
+     * @return the status of the move
+     */
+    @Deprecated
+    public int movePiece(int oldX, int oldY, int newX, int newY){
+
+        // TODO: implement piece moving
+
+        return 0;
+    }
+
+    /**
+     * This version of the movePiece method uses the new system of piece description.
+     * This returns an int return code with the following meanings:
+     * 0 - the move was made
+     * 1 - the move failed
+     * 2 - white has won
+     * 3 - black has won
+     *
+     * @param piece the piece being moved
+     * @param x the x coordinate of the destination
+     * @param y the y coordinate of the destination
+     * @return the status of the move
+     */
+    public int movePiece(Piece piece, int x, int y){
+
+        return 0;
+    }
+
+    /**
+     * Checks if a move is legal. This uses the old system of piece description
+     * @param oldX the x coordinate of the piece to move
+     * @param oldY the y coordinate of the piece to move
+     * @param newX the x coordinate of the destination
+     * @param newY the y coordinate of the destination
+     * @return if the move is legal
+     */
+    @Deprecated
+    public boolean isMoveValid(int oldX, int oldY, int newX, int newY){
+
+        return true;
+    }
+
+    /**
+     * Checks if a move is legal. This uses the new system of piece description
+     * @param piece the piece to move
+     * @param x the x coordinate of the destination
+     * @param y the y coordinate of the destination
+     * @return if the move is legal
+     */
+    public boolean isMoveValid(Piece piece, int x, int y){
+
+        return true;
+    }
 }
